@@ -9,3 +9,10 @@
             </form>
         </div>
     </nav>
+    <?php 
+    if($_SESSION["usuario"]<2){
+                    echo '<script>
+                    window.location.replace("./index.php");
+                    </script>';
+    }
+    ?>

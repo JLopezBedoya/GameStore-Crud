@@ -34,7 +34,7 @@
                 <span class="input-group-text" id="addon-wrapping">Contraseña</span>
                 <input name="passwordUsuario" id="passwordUsuario" type="password" class="form-control" placeholder="password" aria-label="Username" aria-describedby="addon-wrapping">
               </div>
-              <input type="submit" class="btn btn-success offset-5 mt-4"/>
+              <input type="submit" value="Entrar" class="btn btn-success offset-5 mt-4"/>
         </form>
       </div>
 </body>

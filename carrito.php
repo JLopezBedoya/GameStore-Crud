@@ -5,8 +5,12 @@
 <head>
     <?php include "./views/header.php";?>
     <?php 
+    $total = 0;
     if(isset($_POST["quitar"])){
         unset($_SESSION["carrito"][$_POST["quitar"]]);
+    }
+    if(isset($_POST["limpiartodo"])){
+        $_SESSION["carrito"] = [];
     }
     if(isset($_POST["comprartodo"])){
         $usuario=$_SESSION['usuario'] ;
@@ -51,6 +55,7 @@
                     if ($fila = mysqli_fetch_assoc($carrito)) {
                         $gname = $fila["nombre"];
                         $gprice = $fila["precio"];
+                        $total += $gprice; 
                         $gcover = $fila["cover"]; 
                     }
                     echo '<div class="card mb-3 p-2" style="max-width: 540px;">
@@ -64,14 +69,18 @@
                             <div class="card-body offset-1">
                                 <h5 class="card-title centrar">'.$gname.'</h5>
                                 <p class="card-text centrar">'.$gprice.'</p>
-                                <div class="btn-group offset-3" role="group" aria-label="Basic mixed styles example">
+                                <div class="btn-group offset-4" role="group" aria-label="Basic mixed styles example">
                                     <form method="post" class="btn btn-success">
                                         <input type="hidden" name="comprarUnico" value="'. $i .'">
-                                        <button style="border: none;background-color: transparent;color: inherit;padding: 0;font-size: inherit;">Comprar</button>
+                                        <button style="border: none;background-color: transparent;color: inherit;padding: 0;font-size: inherit; width:23px;">
+                                            <img src="./img/comprar.png" />
+                                        </button>
                                     </form>
                                     <form method="post" class="btn btn-danger">
                                         <input type="hidden" name="quitar" value="'. $i .'">
-                                        <button style="border: none;background-color: transparent;color: inherit;padding: 0;font-size: inherit;">Quitar</button>
+                                        <button style="border: none;background-color: transparent;color: inherit;padding: 0;font-size: inherit; width:23px; ">
+                                            <img style="width: 16px" src="./img/quitar.png" />
+                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -84,15 +93,18 @@
             <div class="col-5" style="margin-left:10px;">
                 <div class="p-3" style="background-color: lightcyan; border: solid 5px turquoise; border-radius: 30px;">
                     <h2 class="centrar">Informacion de Compra</h2>
-                    <p>Cantidad de juegos: 10</p>
-                    <p>Total a pagar: $1000000</p>
+                    <p>Cantidad de juegos: <?php echo count($_SESSION["carrito"])?> </p>
+                    <p>Total a pagar: $<?php echo $total ?></p>
                 </div>
                 <div style="background-color: lightcyan; border: solid 5px turquoise; border-radius: 30px;" class="mt-5 p-3">
-                    <form method="post" class="btn btn-success">
+                    <form method="post" class="btn btn-success offset-2">
                         <input type="hidden" name="comprartodo" value="a">
                         <button style="border: none;background-color: transparent;color: inherit;padding: 0;font-size: inherit;">Comprar todo</button>
                     </form>
-                    <button class="btn btn-warning">Limpiar el carrito</button>
+                    <form method="post" class="btn btn-warning">
+                        <input type="hidden" name="limpiartodo" value="a">
+                        <button style="border: none;background-color: transparent;color: inherit;padding: 0;font-size: inherit;">Limpiar carrito</button>
+                    </form>
                 </div>
             </div>
         </div>
